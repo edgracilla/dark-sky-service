@@ -1,0 +1,14 @@
+{
+  "apikey": {
+	"label": "Dark Sky Forecast API Key",
+	"type": "String",
+	"required": true,
+	"help": "Enter the generated API Key for Dark Sky Forecast."
+  },
+  "usetime": {
+	"label": "Time Parameter",
+	"type": "Boolean",
+	"required": true,
+	"help": "Check if the request will include a time in the request."
+  }
+}
