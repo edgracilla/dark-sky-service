@@ -58,8 +58,8 @@ describe('Service', function () {
 			service.send({
 				type: 'data',
 				data: {
-					lat: 14.5569862,
-					lng: 121.0321893
+					lat: 14.556978,
+					lng: 121.034352
 				}
 			}, function (error) {
 				assert.ifError(error);
