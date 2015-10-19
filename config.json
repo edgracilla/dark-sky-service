@@ -1,14 +1,15 @@
 {
   "apikey": {
-	"label": "Dark Sky Forecast API Key",
+	"label": "API Key",
 	"type": "String",
 	"required": true,
 	"help": "Enter the generated API Key for Dark Sky Forecast."
   },
-  "usetime": {
-	"label": "Time Parameter",
-	"type": "Boolean",
-	"required": true,
-	"help": "Check if the request will include a time in the request."
+  "language": {
+	"label": "Language",
+	"type": "String",
+	"enum": ["Arabic", "Bosnian", "Chinese - Simplified", "Chinese - Traditional", "Croatian", "Dutch", "English", "French", "German", "Greek", "Italian", "Polish", "Portuguese", "Russian", "Slovak", "Spanish", "Swedish", "Tetum", "Turkish", "Ukranian"],
+	"help": "(Optional) Return results in the desired language. Default: English",
+	"default": "en"
   }
 }
