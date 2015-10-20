@@ -7,7 +7,7 @@ var cp     = require('child_process'),
 	service;
 
 describe('Service', function () {
-	this.slow(5000);
+	this.slow(8000);
 
 	after('terminate child process', function () {
 		service.kill('SIGKILL');
@@ -20,8 +20,8 @@ describe('Service', function () {
 	});
 
 	describe('#handShake', function () {
-		it('should notify the parent process when ready within 5 seconds', function (done) {
-			this.timeout(5000);
+		it('should notify the parent process when ready within 8 seconds', function (done) {
+			this.timeout(8000);
 
 			service.on('message', function (message) {
 				if (message.type === 'ready')
@@ -43,7 +43,7 @@ describe('Service', function () {
 
 	describe('#data', function () {
 		it('should process the data and send back a result', function (done) {
-			this.timeout(7000);
+			this.timeout(8000);
 
 			service.on('message', function (message) {
 				if (message.type === 'result') {
