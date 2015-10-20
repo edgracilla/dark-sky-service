@@ -23,11 +23,9 @@ const LANG = {
 	'Ukrainian': 'uk'
 };
 
-var url       = require('url'),
-	config    = require('./config.json'),
-	request   = require('request'),
-	platform  = require('./platform'),
-	safeParse = require('safe-json-parse/callback'),
+var config   = require('./config.json'),
+	request  = require('request'),
+	platform = require('./platform'),
 	baseUrl, language;
 
 /*
@@ -57,20 +55,27 @@ platform.on('data', function (data) {
 			platform.sendResult(null);
 		}
 		else {
-			safeParse(body, function (parseError, data) {
-				if (parseError) {
-					console.error(parseError);
-					platform.handleException(parseError);
-					platform.sendResult(null);
-				}
-				else {
-					var weatherData = data.currently;
+			try {
+				var data = JSON.parse(body);
 
-					platform.sendResult(JSON.stringify({
-						weather_conditions: weatherData
-					}));
-				}
-			});
+				var weatherData = data.currently;
+
+				platform.sendResult(JSON.stringify({
+					weather_conditions: weatherData
+				}));
+
+				platform.log(JSON.stringify({
+					title: 'Forecast.io Service Result',
+					lat: data.lat,
+					lng: data.lng,
+					result: weatherData
+				}));
+			}
+			catch (parseError) {
+				console.error(parseError);
+				platform.handleException(parseError);
+				platform.sendResult(null);
+			}
 		}
 	});
 });
