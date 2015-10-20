@@ -66,8 +66,10 @@ platform.on('data', function (data) {
 
 				platform.log(JSON.stringify({
 					title: 'Forecast.io Service Result',
-					lat: data.lat,
-					lng: data.lng,
+					input: {
+						lat: data.lat,
+						lng: data.lng
+					},
 					result: weatherData
 				}));
 			}
