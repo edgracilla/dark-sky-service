@@ -83,6 +83,13 @@ platform.on('data', function (data) {
 });
 
 /*
+ * Event to listen to in order to gracefully release all resources bound to this service.
+ */
+platform.on('close', function () {
+	platform.notifyClose(); // Nothing to clean up. Just send close notification to the platform.
+});
+
+/*
  * Listen for the ready event.
  */
 platform.once('ready', function (options) {
