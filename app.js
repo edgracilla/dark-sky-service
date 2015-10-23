@@ -56,9 +56,9 @@ platform.on('data', function (data) {
 		}
 		else {
 			try {
-				var data = JSON.parse(body);
+				var responseData = JSON.parse(body);
 
-				var weatherData = data.currently;
+				var weatherData = responseData.currently;
 
 				platform.sendResult(JSON.stringify({
 					weather_conditions: weatherData
