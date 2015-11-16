@@ -23,7 +23,8 @@ const LANG = {
 	'Ukrainian': 'uk'
 };
 
-var config   = require('./config.json'),
+var domain   = require('domain'),
+	config   = require('./config.json'),
 	request  = require('request'),
 	platform = require('./platform'),
 	baseUrl, language;
@@ -55,7 +56,16 @@ platform.on('data', function (data) {
 			platform.sendResult(null);
 		}
 		else {
-			try {
+			var d = domain.create();
+
+			d.once('error', function (error) {
+				console.error(error);
+				platform.handleException(new Error('Error parsing response body. Invalid JSON. Body: ' + body));
+				platform.sendResult(null);
+				d.exit();
+			});
+
+			d.run(function () {
 				var responseData = JSON.parse(body);
 
 				var weatherData = responseData.currently;
@@ -72,12 +82,9 @@ platform.on('data', function (data) {
 					},
 					result: weatherData
 				}));
-			}
-			catch (parseError) {
-				console.error(parseError);
-				platform.handleException(parseError);
-				platform.sendResult(null);
-			}
+
+				d.exit();
+			});
 		}
 	});
 });
@@ -86,7 +93,7 @@ platform.on('data', function (data) {
  * Event to listen to in order to gracefully release all resources bound to this service.
  */
 platform.on('close', function () {
-	platform.notifyClose(); // Nothing to clean up. Just send close notification to the platform.
+	platform.notifyClose();
 });
 
 /*
