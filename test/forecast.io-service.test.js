@@ -3,7 +3,7 @@
 const API_KEY = 'e05fd6b98abd2b6c95f749d76ed58e4b';
 
 var cp     = require('child_process'),
-	assert = require('assert'),
+	should = require('should'),
 	service;
 
 describe('Service', function () {
@@ -15,7 +15,7 @@ describe('Service', function () {
 
 	describe('#spawn', function () {
 		it('should spawn a child process', function () {
-			assert.ok(service = cp.fork(process.cwd()), 'Child process not spawned.');
+			should.ok(service = cp.fork(process.cwd()), 'Child process not spawned.');
 		});
 	});
 
@@ -36,7 +36,7 @@ describe('Service', function () {
 					}
 				}
 			}, function (error) {
-				assert.ifError(error);
+				should.ifError(error);
 			});
 		});
 	});
@@ -44,25 +44,28 @@ describe('Service', function () {
 	describe('#data', function () {
 		it('should process the data and send back a result', function (done) {
 			this.timeout(8000);
+			var requestId = (new Date()).getTime().toString();
 
 			service.on('message', function (message) {
 				if (message.type === 'result') {
 					var data = JSON.parse(message.data);
 					console.log(data);
 
-					assert.ok(data.weather_conditions, 'Invalid return data.');
+					should.ok(data.weather_conditions, 'Invalid return data.');
+					should.equal(message.requestId, requestId);
 					done();
 				}
 			});
 
 			service.send({
 				type: 'data',
+				requestId: requestId,
 				data: {
 					lat: 14.556978,
 					lng: 121.034352
 				}
 			}, function (error) {
-				assert.ifError(error);
+				should.ifError(error);
 			});
 		});
 	});
