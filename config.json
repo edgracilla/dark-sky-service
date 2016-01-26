@@ -1,7 +1,7 @@
 {
   "apikey": {
 	"label": "API Key",
-	"type": "String",
+	"type": "Password",
 	"required": true,
 	"help": "Enter the generated API Key for Dark Sky Forecast."
   },
