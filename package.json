@@ -1,7 +1,7 @@
 {
   "name": "forecast.io-service",
   "description": "Forecast.io Service Plugin for the Reekoh IoT Platform. Integrates a Reekoh instance to Forecast.io API to get real-time weather conditions.",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "author": "Reekoh, Inc.",
   "main": "app.js",
   "scripts": {
@@ -12,17 +12,17 @@
     "url": "https://github.com/Reekoh/forecast.io-service"
   },
   "dependencies": {
-    "request": "^2.67.0"
+    "request": "^2.71.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-cli": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.1",
     "gulp-jshint": "^2.0.0",
     "gulp-json-lint": "^0.1.0",
     "gulp-mocha": "^2.2.0",
-    "gulp-plumber": "^1.0.1",
-    "mocha": "^2.3.4",
-    "should": "^8.0.1"
+    "gulp-plumber": "^1.1.0",
+    "mocha": "^2.4.5",
+    "should": "^8.3.1"
   },
   "license": "LGPL-3.0"
 }
