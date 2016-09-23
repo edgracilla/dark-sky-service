@@ -40,7 +40,7 @@ platform.on('data', function (requestId, data) {
         .language(language)
         .exclude('minutely,hourly,daily,alerts,flags')
         .get()
-        .then(response => {
+        .then((response) => {
             platform.sendResult(requestId, JSON.stringify({
                 weather_conditions: response.currently
             }));
@@ -54,7 +54,7 @@ platform.on('data', function (requestId, data) {
                 result: response.currently
             }));
         })
-        .catch(error => {
+        .catch((error) => {
             platform.sendResult(requestId, null);
             platform.handleException(error);
         });
