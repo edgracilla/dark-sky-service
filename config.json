@@ -3,7 +3,7 @@
 	"label": "API Key",
 	"type": "Password",
 	"required": true,
-	"help": "Enter the generated API Key for Dark Sky Forecast."
+	"help": "Kindly specify your Dark Sky API Key for authentication."
   },
   "language": {
 	"label": "Language",
