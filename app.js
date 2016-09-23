@@ -33,31 +33,31 @@ var domain   = require('domain'),
  * @param {object} data The data coming from the device represented as JSON Object.
  */
 platform.on('data', function (requestId, data) {
-    forecast
-        .latitude(data.lat)
-        .longitude(data.lng)
-        .units('auto')
-        .language(language)
-        .exclude('minutely,hourly,daily,alerts,flags')
-        .get()
-        .then((response) => {
-            platform.sendResult(requestId, JSON.stringify({
-                weather_conditions: response.currently
-            }));
+	forecast
+		.latitude(data.lat)
+		.longitude(data.lng)
+		.units('auto')
+		.language(language)
+		.exclude('minutely,hourly,daily,alerts,flags')
+		.get()
+		.then((response) => {
+			platform.sendResult(requestId, JSON.stringify({
+				weather_conditions: response.currently
+			}));
 
-            platform.log(JSON.stringify({
-                title: 'Dark Sky Service Result',
-                input: {
-                    lat: data.lat,
-                    lng: data.lng
-                },
-                result: response.currently
-            }));
-        })
-        .catch((error) => {
-            platform.sendResult(requestId, null);
-            platform.handleException(error);
-        });
+			platform.log(JSON.stringify({
+				title: 'Dark Sky Service Result',
+				input: {
+					lat: data.lat,
+					lng: data.lng
+				},
+				result: response.currently
+			}));
+		})
+		.catch((error) => {
+			platform.sendResult(requestId, null);
+			platform.handleException(error);
+		});
 });
 
 /*
@@ -73,8 +73,8 @@ platform.on('close', function () {
 platform.once('ready', function (options) {
 	language = LANG[options.language] || config.language.default;
 
-    let DarkSky = require('dark-sky');
-    forecast = new DarkSky(options.apikey);
+	let DarkSky = require('dark-sky');
+	forecast = new DarkSky(options.apikey);
 
 	platform.log('Dark Sky Service Initialized.');
 	platform.notifyReady();
