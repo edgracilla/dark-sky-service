@@ -1,7 +1,7 @@
 {
-  "name": "forecast.io-service",
-  "description": "Forecast.io Service Plugin for the Reekoh IoT Platform. Integrates a Reekoh instance to Forecast.io API to get real-time weather conditions.",
-  "version": "1.0.0",
+  "name": "dark-sky-service",
+  "description": "Dark-Sky Service Plugin for the Reekoh IoT Platform. Integrates a Reekoh instance to Dark Sky API to get real-time weather conditions.",
+  "version": "1.0.1",
   "author": "Reekoh, Inc.",
   "main": "app.js",
   "scripts": {
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Reekoh/forecast.io-service"
+    "url": "https://github.com/Reekoh/dark-sky-service"
   },
   "dependencies": {
-    "request": "^2.71.0"
+    "dark-sky": "^1.0.7"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

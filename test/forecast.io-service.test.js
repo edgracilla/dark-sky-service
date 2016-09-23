@@ -1,6 +1,6 @@
 'use strict';
 
-const API_KEY = 'e05fd6b98abd2b6c95f749d76ed58e4b';
+const API_KEY = '202a46966b01ef9a7ad204004ddadc0c';
 
 var cp     = require('child_process'),
 	should = require('should'),
