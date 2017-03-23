@@ -1,72 +1,56 @@
-'use strict';
+'use strict'
 
-const API_KEY = '202a46966b01ef9a7ad204004ddadc0c';
+const amqp = require('amqplib')
 
-var cp     = require('child_process'),
-	should = require('should'),
-	service;
+let _app = null
+let _channel = null
+let _conn = null
 
-describe('Service', function () {
-	this.slow(8000);
+describe('Dark Sky Service', function () {
+  this.slow(5000)
 
-	after('terminate child process', function () {
-		service.kill('SIGKILL');
-	});
+  before('init', () => {
+    process.env.OUTPUT_PIPES = 'Op1,Op2'
+    process.env.LOGGERS = 'logger1,logger2'
+    process.env.EXCEPTION_LOGGERS = 'exlogger1,exlogger2'
+    process.env.BROKER = 'amqp://guest:guest@127.0.0.1/'
+    process.env.CONFIG = '{"apiKey": "202a46966b01ef9a7ad204004ddadc0c", "lang": "en"}'
+    process.env.INPUT_PIPE = 'demo.pipe.service'
+    process.env.OUTPUT_SCHEME = 'RESULT'
+    process.env.OUTPUT_NAMESPACE = 'RESULT'
+    process.env.ACCOUNT = 'demo account'
 
-	describe('#spawn', function () {
-		it('should spawn a child process', function () {
-			should.ok(service = cp.fork(process.cwd()), 'Child process not spawned.');
-		});
-	});
+    amqp.connect(process.env.BROKER)
+      .then((conn) => {
+        _conn = conn
+        return conn.createChannel()
+      }).then((channel) => {
+      _channel = channel
+    }).catch((err) => {
+      console.log(err)
+    })
+  })
 
-	describe('#handShake', function () {
-		it('should notify the parent process when ready within 8 seconds', function (done) {
-			this.timeout(8000);
+  after('terminate child process', function (done) {
+    _conn.close()
+    done()
+  })
 
-			service.on('message', function (message) {
-				if (message.type === 'ready')
-					done();
-			});
+  describe('#start', function () {
+    it('should start the app', function (done) {
+      this.timeout(8000)
+      _app = require('../app')
+      _app.once('init', done)
+    })
+  })
 
-			service.send({
-				type: 'ready',
-				data: {
-					options: {
-						apikey: API_KEY
-					}
-				}
-			}, function (error) {
-				should.ifError(error);
-			});
-		});
-	});
+  describe('#data', () => {
+    it('should process the data and send back a result', function (done) {
+      this.timeout(11000)
+      let dummyData = { 'latitude': '14.556978', 'longitude': '121.034352' }
+      _channel.sendToQueue('demo.pipe.service', new Buffer(JSON.stringify(dummyData)))
 
-	describe('#data', function () {
-		it('should process the data and send back a result', function (done) {
-			this.timeout(8000);
-			var requestId = (new Date()).getTime().toString();
-
-			service.on('message', function (message) {
-				if (message.type === 'result') {
-					var data = JSON.parse(message.data);
-					console.log(data);
-
-					should.ok(data.weather_conditions, 'Invalid return data.');
-					should.equal(message.requestId, requestId);
-					done();
-				}
-			});
-
-			service.send({
-				type: 'data',
-				requestId: requestId,
-				data: {
-					lat: 14.556978,
-					lng: 121.034352
-				}
-			}, function (error) {
-				should.ifError(error);
-			});
-		});
-	});
-});
+      setTimeout(done, 10000)
+    })
+  })
+})

@@ -1,28 +1,27 @@
 {
   "name": "dark-sky-service",
   "description": "Dark-Sky Service Plugin for the Reekoh IoT Platform. Integrates a Reekoh instance to Dark Sky API to get real-time weather conditions.",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "author": "Reekoh, Inc.",
   "main": "app.js",
+  "license": "GPL-3.0",
   "scripts": {
-    "test": "gulp test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Reekoh/dark-sky-service"
+    "test": "gulp lint"
   },
   "dependencies": {
+    "reekoh": "^1.0.1",
     "dark-sky": "^1.0.7"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-cli": "^1.2.1",
-    "gulp-jshint": "^2.0.0",
+    "gulp-jshint": "^2.0.1",
     "gulp-json-lint": "^0.1.0",
-    "gulp-mocha": "^3.0.1",
+    "gulp-mocha": "^2.2.0",
     "gulp-plumber": "^1.1.0",
-    "mocha": "^3.0.2",
-    "should": "^11.1.0"
-  },
-  "license": "LGPL-3.0"
+    "gulp-standard": "^8.0.4",
+    "jshint": "^2.9.4",
+    "mocha": "^2.5.3",
+    "should": "^9.0.2"
+  }
 }
